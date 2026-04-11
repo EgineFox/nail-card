@@ -1,61 +1,105 @@
 "use client"
 
 import { useState } from "react";
+import { InlineWidget } from "react-calendly";
+import Vine from "./components/Vine"
 
 const content = {
   ru: {
     name: " Анна Киряченко",
     title: "Мастер маникюра",
     city: "Холон",
-    about: "Привет! Я Анна, начинающий мастер маникюра. Мои работы отличаются превосходным качеством и долгой ноской. Работаю с гелем, акригелем и натуральными ногтями. Создаю дизайны под любой образ.",
+    about: "Привет! Я Анна. Маникюр — моя страсть, и каждая работа для меня важна. Я в начале пути, но уже сейчас вкладываю в каждый ноготок максимум внимания и аккуратности. Работаю с гелем, акригелем и натуральными ногтями — и очень люблю, когда клиентка уходит довольной 🌸",
     services: "Услуги",
     portfolio: "Мои работы",
     reviews:"Отзывы" ,
-    contact: "Записаться" ,
+    contact: "Запись" ,
     whatsapp: "Написать в WhatsApp",
-    serviceList: [
-      { name: "Маникюр", price: "150 ₪", time: "60 мин" },
-      { name: "Педикюр", price: "250 ₪", time: "75 мин" },
-      { name: "Гель-лак", price: "200 ₪", time: "90 мин" },
-      { name: "Наращивание", price: "300 ₪", time: "120 мин" },
-    ],
+   serviceList: [
+  { name: "Маникюр + Гель", desc: "Замачивание, придание формы, полировка и нанесение гель-лака.", price: "200 ₪", time: "60 мин" },
+  { name: "Экспресс маникюр", desc: "Форма, шлифовка и покрытие.", price: "100 ₪", time: "20 мин" },
+  { name: "Традиционный маникюр", desc: "Замачивание, придание формы, полировка и шлифовка. Идеально для еженедельного ухода.", price: "200 ₪", time: "30 мин" },
+  { name: "Наращивание + маникюр гель", desc: null, price: "450 ₪", time: "120 мин" },
+  { name: "Коррекция наращенных + маникюр гель", desc: null, price: "300 ₪", time: "80 мин" },
+  { name: "Снятие гель-лака", desc: null, price: "50 ₪", time: "15 мин" },
+  { name: "Снятие гель-конструктора / акригеля", desc: null, price: "90 ₪", time: "25 мин" },
+  { name: "Французский маникюр", desc: "Дополнительная стоимость к любой услуге.", price: "50 ₪", time: "20 мин" },
+  { name: "Спа-маникюр", desc: "Натуральный скраб, омолаживающий пилинг, интенсивный бальзам для кутикулы, парафиновая процедура и увлажняющий массаж.", price: "300 ₪", time: "120 мин" },
+  { name: "Традиционный педикюр", desc: "Ванночка, скраб-пилинг, придание формы, уход за кутикулой и полировка.", price: "250 ₪", time: "50 мин" },
+  { name: "Экспресс-педикюр", desc: "Замачивание, придание формы, нанесение лака и покрытие.", price: "150 ₪", time: "15 мин" },
+  { name: "Медицинский педикюр", desc: null, price: "300 ₪", time: "120 мин" },
+  { name: "Экспресс-педикюр + гель-лак", desc: "Пилирование и гель-лак.", price: "200 ₪", time: "45 мин" },
+  { name: "Традиционный педикюр + гель-лак", desc: null, price: "280 ₪", time: "60 мин" },
+],
+showMore: "Показать все услуги",
+showLess: "Скрыть",
     reviewList: [
       { name: "Мария", text: "Потрясающая работа! Ногти держатся уже 3 недели без сколов." },
       { name: "Светлана", text: "Очень аккуратно и быстро. Буду приходить снова!" },
       { name: "Юля", text: "Анна — настоящий профессионал. Дизайн получился именно таким, как я хотела." },
     ],
+  book: "Записаться онлайн",
   },
   he: {
-    name: "אנה",
+    name: "אנה קיריאצ'נקו",
     title: "מומחית מניקור",
     city: "חולון",
-    about: "היי. עובדת עם ג'ל, אקריל וציפורניים טבעיות. יוצרת עיצובים לכל סגנון.",
+    about: "היי! אני אנה. מניקור זו התשוקה שלי, וכל עבודה חשובה לי. אני בתחילת הדרך, אבל כבר עכשיו אני משקיעה בכל ציפורן את מלוא תשומת הלב והדיוק שלי. עובדת עם ג'ל, אקריג'ל וציפורניים טבעיות — ואני פשוט אוהבת כשהלקוחה עוזבת עם חיוך 🌸",
     services: "שירותים",
     portfolio: "העבודות שלי",
     reviews: "המלצות",
     contact: "לקביעת תור",
     whatsapp: "כתבי לי בוואטסאפ",
     serviceList: [
-      { name: "מניקור", price: "80 ₪", time: "60 דקות" },
-      { name: "פדיקור", price: "100 ₪", time: "75 דקות" },
-      { name: "לק ג'ל", price: "120 ₪", time: "90 דקות" },
-      { name: "בניית ציפורניים", price: "200 ₪", time: "120 דקות" },
-    ],
+  { name: "מניקור + ג'ל", desc: "השריה, עיצוב צורה, ליטוש ומריחת לק ג'ל.", price: "200 ₪", time: "60 דקות" },
+  { name: "מניקור אקספרס", desc: "עיצוב צורה, ליטוש וציפוי.", price: "100 ₪", time: "20 דקות" },
+  { name: "מניקור מסורתי", desc: "השריה, עיצוב צורה, ליטוש וחידוד. הטיפול האידיאלי לטיפוח שבועי.", price: "200 ₪", time: "30 דקות" },
+  { name: "בניית ציפורניים + מניקור ג'ל", desc: null, price: "450 ₪", time: "120 דקות" },
+  { name: "תיקון ציפורניים מוארכות + מניקור ג'ל", desc: null, price: "300 ₪", time: "80 דקות" },
+  { name: "הסרת לק ג'ל", desc: null, price: "50 ₪", time: "15 דקות" },
+  { name: "הסרת ג'ל בונדר / אקריג'ל", desc: null, price: "90 ₪", time: "25 דקות" },
+  { name: "מניקור צרפתי", desc: "עלות נוספת לכל שירות.", price: "50 ₪", time: "20 דקות" },
+  { name: "ספא מניקור", desc: "סקראב טבעי, פילינג מחדש, בלסם אינטנסיבי לקוטיקולה, טיפול פרפין ועיסוי לחות.", price: "300 ₪", time: "120 דקות" },
+  { name: "פדיקור מסורתי", desc: "אמבטיה, פילינג סקראב, עיצוב צורה, טיפול בקוטיקולה וליטוש.", price: "250 ₪", time: "50 דקות" },
+  { name: "פדיקור אקספרס", desc: "השריה, עיצוב צורה, מריחת לק וציפוי.", price: "150 ₪", time: "15 דקות" },
+  { name: "פדיקור רפואי", desc: null, price: "300 ₪", time: "120 דקות" },
+  { name: "פדיקור אקספרס + לק ג'ל", desc: "פילינג ולק ג'ל.", price: "200 ₪", time: "45 דקות" },
+  { name: "פדיקור מסורתי + לק ג'ל", desc: null, price: "280 ₪", time: "60 דקות" },
+],
+showMore: "הצג את כל השירותים",
+showLess: "הסתר",
     reviewList: [
       { name: "מריה", text: "עבודה מדהימה! הציפורניים מחזיקות כבר 3 שבועות." },
       { name: "יוליה", text: "מאוד מדויק ומהיר. אחזור בהחלט!" },
       { name: "אנה", text: "מקצועית אמיתית. העיצוב יצא בדיוק כפי שרציתי." },
     ],
+ book: "קביעת תור אונליין"
   },
 }
 
 export default function Home() {
   const [lang, setLang ] = useState('ru');
+  const [showAllServices, setShowAllServices] = useState(false);
   const t = content[lang];
   const isHebrew = lang === 'he';
 
+  const workImages = [
+  "1-1.png",
+  "3-before.jpeg",
+  "2.jpeg",
+  "3.jpeg",
+  "4.jpeg",
+ 
+  ];
+
+  // Генерируем ровно 6 картинок — если файлов меньше, повторяем
+const galleryImages = Array.from({ length: 6 }, (_, i) => workImages[i % workImages.length])
+
   return ( 
   <>
+       <Vine side="left" />
+  <Vine side="right" />
+
       <main dir={isHebrew ? 'rtl' : 'ltr'}
         className = "min-h-screen bg-rose-50 font-sans" >
     
@@ -77,6 +121,7 @@ export default function Home() {
 
         {/* Hero */}
           <section className='flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 bg-gradient-to-b from-rose-100 to-rose-50'>
+            
             <div className="w-32 h-32 rounded-full bg-rose-200 mb-6 overflow-hidden">
               <img
             src="AnnaK-logo.jpeg"
@@ -84,10 +129,16 @@ export default function Home() {
             className="w-full h-full object-cover"
           />
             </div>
-            <h1 className="text-3xl font-bold text-rose-700 mb-2">{t.name}</h1>
+            <h1 className={`font-bold text-rose-700 mb-2 ${
+  lang === "ru"
+    ? "font-[family-name:var(--font-great-vibes)] text-5xl"
+    : "font-[family-name:var(--font-frank-ruhl)] text-3xl"
+}`}>
+  {t.name}
+</h1>
         <p className="text-rose-400 text-lg mb-6">{t.title} · {t.city}</p>
         
-          <a href="https://wa.me/972501234567"
+          <a href="https://wa.me/972509222832"
           target="_blank"
           className="bg-rose-400 text-white px-8 py-3 rounded-full text-base font-medium shadow-md hover:bg-rose-500 transition-all"
         >
@@ -99,39 +150,67 @@ export default function Home() {
       <section className="max-w-xl mx-auto px-6 py-12 text-center">
         <p className="text-rose-600 text-base leading-relaxed">{t.about}</p>
       </section>
-          {/* Услуги */}
-      <section className="bg-white px-6 py-12">
-        <h2 className="text-2xl font-semibold text-rose-600 text-center mb-8">{t.services}</h2>
-        <div className="max-w-xl mx-auto flex flex-col gap-3">
-          {t.serviceList.map((s, i) => (
-            <div key={i} className="flex justify-between items-center bg-rose-50 rounded-2xl px-5 py-4 shadow-sm">
-              <span className="text-rose-700 font-medium">{s.name}</span>
-              <div className="text-right text-sm text-rose-400">
-                <div className="font-semibold text-rose-600">{s.price}</div>
-                <div>{s.time}</div>
-              </div>
-            </div>
-          ))}
+               {/* Услуги */}
+<section className="bg-white px-6 py-12">
+  <h2 className={`font-bold text-rose-700 mb-2 ${
+  lang === "ru"
+    ? "font-[family-name:var(--font-great-vibes)] text-5xl"
+    : "font-[family-name:var(--font-frank-ruhl)] text-3xl"
+}`}>{t.services}</h2>
+
+  <div className="max-w-xl mx-auto flex flex-col gap-3">
+    {(showAllServices ? t.serviceList : t.serviceList.slice(0, 5)).map((s, i) => (
+      <div key={i} className="bg-rose-50 rounded-2xl px-5 py-4 shadow-sm">
+        <div className="flex justify-between items-start gap-4">
+          <span className="text-rose-700 font-semibold">{s.name}</span>
+          <div className={`text-sm text-rose-400 shrink-0 ${isHebrew ? "text-left" : "text-right"}`}>
+            <div className="font-semibold text-rose-600">{s.price}</div>
+            <div>{s.time}</div>
+          </div>
         </div>
-      </section>
-          {/* Портфолио */}
-<section className="px-6 py-12 bg-white">
-  <h2 className="text-2xl font-semibold text-rose-600 text-center mb-8">{t.portfolio}</h2>
-  <div className="max-w-xl mx-auto grid grid-cols-3 gap-3">
-    {[1, 2, 3, 4, 5, 6].map((i) => (
-      <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-rose-100">
-        <img
-          src={`https://picsum.photos/seed/nail${i}/300/300`}
-          alt=""
-          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-        />
+        {s.desc && (
+          <p className="text-rose-400 text-xs mt-1 leading-relaxed">{s.desc}</p>
+        )}
       </div>
     ))}
   </div>
+
+  <div className="text-center mt-6">
+    <button
+      onClick={() => setShowAllServices(!showAllServices)}
+      className="text-rose-400 text-sm border border-rose-200 px-6 py-2 rounded-full hover:bg-rose-50 transition-all"
+    >
+      {showAllServices ? t.showLess : t.showMore}
+    </button>
+  </div>
 </section>
+
+      {/* Портфолио */}
+    <section className="px-6 py-12 bg-white">
+      <h2 className={`font-bold text-rose-700 mb-2 ${
+  lang === "ru"
+    ? "font-[family-name:var(--font-great-vibes)] text-5xl"
+    : "font-[family-name:var(--font-frank-ruhl)] text-3xl"
+}`}>{t.portfolio}</h2>
+      <div className="max-w-xl mx-auto grid grid-cols-3 gap-3">
+        {galleryImages.map((img, i) => (
+          <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-rose-100">
+            <img
+              src={`/works/${img}`}
+              alt=""
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        ))}
+      </div>
+    </section>
       {/* Отзывы */}
       <section className="px-6 py-12 bg-rose-50">
-        <h2 className="text-2xl font-semibold text-rose-600 text-center mb-8">{t.reviews}</h2>
+        <h2 className={`font-bold text-rose-700 mb-2 ${
+  lang === "ru"
+    ? "font-[family-name:var(--font-great-vibes)] text-5xl"
+    : "font-[family-name:var(--font-frank-ruhl)] text-3xl"
+}`}>{t.reviews}</h2>
         <div className="max-w-xl mx-auto flex flex-col gap-4">
           {t.reviewList.map((r, i) => (
             <div key={i} className="bg-white rounded-2xl px-5 py-4 shadow-sm">
@@ -142,27 +221,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Контакты */}
-      <section className="px-6 py-12 bg-white text-center">
-        <h2 className="text-2xl font-semibold text-rose-600 mb-6">{t.contact}</h2>
-        
-          <a href="https://wa.me/972501234567"
-          target="_blank"
-          className="inline-block bg-rose-400 text-white px-10 py-4 rounded-full text-lg font-medium shadow-md hover:bg-rose-500 transition-all"
-        >
-          {t.whatsapp}
-        </a>
-      </section>
+    {/* Запись */}
+<section className="px-6 py-12 bg-white">
+  <h2 className={`font-bold text-rose-700 mb-2 ${
+  lang === "ru"
+    ? "font-[family-name:var(--font-great-vibes)] text-5xl"
+    : "font-[family-name:var(--font-frank-ruhl)] text-3xl"
+}`}>{t.book}</h2>
+  <div className="max-w-xl mx-auto rounded-2xl overflow-hidden shadow-sm">
+     <InlineWidget
+      url="https://calendly.com/ninorichi-israel/30min"
+      styles={{ height: "650px" }}
+    />
+  </div>
+</section>
 
       {/* Подвал */}
       <footer className="text-center py-6 text-rose-300 text-sm bg-rose-50">
-        © 2026 {t.name}
+        © 2026 Made with💕to Anna's works <a href="https://www.instagram.com/_mrs_ekaterina_smith_/" className={`font-bold`}>by Ekaterina Morzhakova</a>
       </footer>
       </main>
   );
 {/* Плавающая кнопка WhatsApp */}
 
-  < a href="https://wa.me/972501234567"
+  < a href="https://wa.me/972509222832"
   target="_blank"
   className="fixed bottom-6 left-6 z-50 bg-green-400 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-green-500 transition-all hover:scale-110"
   aria-label="WhatsApp"
