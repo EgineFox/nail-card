@@ -179,14 +179,14 @@ const galleryImages = Array.from({ length: 6 }, (_, i) => workImages[i % workIma
     ))}
   </div>
 
-  <div className="text-center mt-6">
+  {/* <div className="text-center mt-6">
     <button
       onClick={() => setShowAllServices(!showAllServices)}
       className="text-rose-400 text-sm border border-rose-200 px-6 py-2 rounded-full hover:bg-rose-50 transition-all"
     >
       {showAllServices ? t.showLess : t.showMore}
     </button>
-  </div>
+  </div> */}
 </section>
 
       {/* Портфолио */}
